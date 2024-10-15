@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword,signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 
 import './App.css';
 import { app } from './firebase';
+const provider=new GoogleAuthProvider();
 
 function App() {
   const [formdata, setformdata] = useState({});
@@ -13,7 +14,10 @@ function App() {
       [event.target.name]: event.target.value,
     });
   };
-
+const google =()=>
+{
+  signInWithPopup(auth,provider);
+}
   const auth = getAuth(app);
 
   const submit = (e) => {
@@ -36,6 +40,7 @@ function App() {
         <label htmlFor="password">Password</label>
         <input type="password" id="password" name="password" onChange={collect} />
         <button type="submit">Submit</button>
+        <button onClick={google}>sign in with google</button>
       </form>
     </div>
   );
